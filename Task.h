@@ -20,7 +20,7 @@ public:
 private:
 	int duration;
 	int nummer;
-	Machine& machine;
+	Machine* machine;
 	Task* nextTask;
 	Task* prevTask;
 };

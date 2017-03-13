@@ -7,15 +7,15 @@
 
 #ifndef MACHINE_H_
 #define MACHINE_H_
-#include "Task.h"
 
+class Task;
 class Machine
 {
 public:
 	Machine();
 	virtual ~Machine();
 private:
-	Task& curTask;
+	Task* curTask;
 };
 
 #endif /* MACHINE_H_ */

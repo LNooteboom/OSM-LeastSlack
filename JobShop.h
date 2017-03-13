@@ -7,6 +7,7 @@
 
 #ifndef JOBSHOP_H_
 #define JOBSHOP_H_
+#include "Job.h"
 
 class JobShop
 {
@@ -15,8 +16,8 @@ public:
 	virtual ~JobShop();
 	void createJobs();
 private:
-	Job jobs[];
-	Job& critPath;
+	std::vector<Job> jobs;
+	Job* critPath;
 };
 
 #endif /* JOBSHOP_H_ */
