@@ -8,6 +8,7 @@
 #ifndef JOB_H_
 #define JOB_H_
 #include "Task.h"
+#include <vector>
 
 class Job
 {
@@ -15,7 +16,7 @@ public:
 	Job();
 	virtual ~Job();
 private:
-	Task tasks[];
+	std::vector<Task> tasks;
 	int nrOfTasks;
 	int currentTask;
 	int id;
