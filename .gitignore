@@ -1,1 +1,4 @@
 *.lock
+*.d
+*.o
+Debug/
