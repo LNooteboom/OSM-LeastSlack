@@ -1,4 +1,5 @@
 *.lock
 *.d
 *.o
+.settings/
 Debug/

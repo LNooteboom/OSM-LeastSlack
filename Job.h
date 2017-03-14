@@ -16,7 +16,7 @@ public:
 	Job();
 	virtual ~Job();
 private:
-	std::vector<Task> tasks;
+	std::vector<Task>* tasks;
 	int nrOfTasks;
 	int currentTask;
 	int id;

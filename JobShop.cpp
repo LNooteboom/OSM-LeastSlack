@@ -21,13 +21,3 @@ JobShop::~JobShop()
 void JobShop::createJobs()
 {
 }
-
-const std::string& JobShop::getFilename() const
-{
-	return filename;
-}
-
-void JobShop::setFilename(const std::string& filename)
-{
-	this->filename = filename;
-}

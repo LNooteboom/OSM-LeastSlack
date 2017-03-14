@@ -11,10 +11,15 @@
 #include "JobShop.h"
 #include <memory>
 
-
 int main(int argc, char **argv) {
-
-	std::ifstream istrm(JobShop.getFilename(), std::ios::binary);
+	char *filename;
+	if (argc >= 2) {
+		filename = argv[1];
+	} else {
+		std::cout << "Please specify a filename" << std::endl;
+		return 1;
+	}
+	std::ifstream istrm(filename, std::ios::binary);
 
 	return 0;
 }
