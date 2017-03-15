@@ -52,6 +52,11 @@ public:
 		this->prevTask = prevTask;
 	}
 
+	const int getMachineId() const
+	{
+		return machine.getId();
+	}
+
 private:
 	int duration;
 	int nummer;

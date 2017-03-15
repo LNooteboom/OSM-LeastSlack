@@ -28,7 +28,7 @@ private:
 	int nrofJobs;
 	int nrofMachines;
 
-	int getNextValue();
+	int getNextValue(bool& newLine);
 	void parseJobs();
 };
 

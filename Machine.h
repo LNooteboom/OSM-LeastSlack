@@ -12,10 +12,17 @@ class Task;
 class Machine
 {
 public:
-	Machine();
+	Machine(int _id);
 	virtual ~Machine();
+
+	int getId() const
+	{
+		return id;
+	}
+
 private:
 	Task* curTask;
+	int id;
 };
 
 #endif /* MACHINE_H_ */

@@ -17,20 +17,24 @@ JobShop::JobShop(std::ifstream& _istrm)
 {
 	// TODO Auto-generated constructor stub
 	//get args
-	nrofMachines = getNextValue();
-	nrofJobs = getNextValue();
+	bool newLine;
+	nrofMachines = getNextValue(newLine);
+	nrofJobs = getNextValue(newLine);
 
 	std::cout << nrofJobs << ", " << nrofMachines << std::endl;
 
 	for (int i = 0; i < nrofMachines; i++)
 	{
-		machines.push_back(Machine());
+		machines.push_back(Machine(i));
 	}
-	//ignore next chars until newline;
-	char c;
-	do {
-		istrm.get(c);
-	} while (c != '\n');
+	if (!newLine)
+	{
+		//ignore next chars until newline;
+		char c;
+		do {
+			istrm.get(c);
+		} while (c != '\n');
+	}
 	parseJobs();
 }
 
@@ -46,44 +50,45 @@ void JobShop::parseJobs()
 	for (int i = 0; i < nrofJobs; i++) {
 		jobs.push_back(Job());
 		bool newLine;
-		std::cout << jobs.size() << ": ";
 		do
 		{
-			int machineNum = getNextValue();
-			int duration = getNextValue();
+			int machineNum = getNextValue(newLine);
+			int duration = getNextValue(newLine);
 			Machine& curMachine = machines[machineNum];
 			jobs.back().addTask(Task(curMachine, duration, prevTask));
 			prevTask = jobs.back().getLastTask();
-			std::cout << machineNum << "-" << duration << ", ";
-			char c;
-			while (true)
+			if (!newLine)
 			{
-				c = istrm.peek();
-				if (c == '\n' || c == ' ')
+				char c;
+				while (true)
 				{
-					newLine = true;
-					break;
-				}
-				else if (c != ' ')
-				{
-					break;
-				}
-				else
-				{
-					c = istrm.get();
+					c = istrm.peek();
+					if (c == ' ')
+					{
+						istrm.get(c);
+					}
+					else if (c == '\n')
+					{
+						newLine = true;
+						break;
+					}
+					else
+					{
+						break;
+					}
 				}
 			}
 		} while (!newLine);
-		std::cout << std::endl;
 	}
 
 }
 
-int JobShop::getNextValue()
+int JobShop::getNextValue(bool& newLine)
 {
 	char c;
 	char arr[BUFFER_LEN];
 	int count = 0;
+	newLine = false;
 	while (true)
 	{
 		istrm.get(c);
@@ -107,6 +112,10 @@ int JobShop::getNextValue()
 		}
 		else if (count != 0)
 		{
+			if (c == '\n')
+			{
+				newLine = true;
+			}
 			break;
 		}
 	}
@@ -118,12 +127,12 @@ void JobShop::print()
 	for (int i = 0; i < nrofJobs; i++)
 	{
 		Job& curJob = jobs[i];
-		std::cout << i << ": " << curJob.getNrOfTasks() << std::endl;
-		/*
+		std::cout << i << ": ";
+
 		for (int j = 0; j < curJob.getNrOfTasks(); j++)
 		{
-			 //std::cout << curJob.getTasks()[j].getDuration() << ", ";
-		}*/
-		//std::cout << std::endl;
+			 std::cout << curJob.getTasks()[j].getMachineId() << "-" << curJob.getTasks()[j].getDuration() << ", ";
+		}
+		std::cout << std::endl;
 	}
 }
