@@ -5,6 +5,7 @@
  *      Author: lieven
  */
 
+#include <vector>
 #include "Job.h"
 
 Job::Job()
@@ -18,3 +19,12 @@ Job::~Job()
 	// TODO Auto-generated destructor stub
 }
 
+void Job::addTask(Task task)
+{
+	tasks.push_back(task);
+}
+
+Task* Job::getLastTask()
+{
+	return &( tasks.back() );
+}

@@ -15,9 +15,32 @@ class Job
 public:
 	Job();
 	virtual ~Job();
+
+	void addTask(Task task);
+	Task* getLastTask();
+
+	int getCurrentTask() const
+	{
+		return currentTask;
+	}
+
+	int getId() const
+	{
+		return id;
+	}
+
+	int getNrOfTasks() const
+	{
+		return tasks.size();
+	}
+
+	const std::vector<Task>& getTasks() const
+	{
+		return tasks;
+	}
+
 private:
-	std::vector<Task>* tasks;
-	int nrOfTasks;
+	std::vector<Task> tasks;
 	int currentTask;
 	int id;
 };

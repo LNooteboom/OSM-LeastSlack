@@ -15,13 +15,21 @@
 class JobShop
 {
 public:
-	JobShop();
+	JobShop(std::ifstream& _istrm);
 	virtual ~JobShop();
-	void createJobs();
+	void print();
 
 private:
+	std::ifstream& istrm;
 	std::vector<Job> jobs;
+	std::vector<Machine> machines;
 	Job* critPath;
+
+	int nrofJobs;
+	int nrofMachines;
+
+	int getNextValue();
+	void parseJobs();
 };
 
 #endif /* JOBSHOP_H_ */

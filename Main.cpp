@@ -20,6 +20,15 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	std::ifstream istrm(filename, std::ios::binary);
+	if (istrm.fail()) {
+		std::cout << "Failed to open file: " << filename << std::endl;
+		return 1;
+	}
+	std::cout << "start" << std::endl;
+	JobShop* js = new JobShop(istrm);
+	js->print();
+
+	istrm.close();
 
 	return 0;
 }
