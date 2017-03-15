@@ -13,7 +13,7 @@
 class Job
 {
 public:
-	Job();
+	Job(int _id);
 	virtual ~Job();
 
 	void addTask(Task task);

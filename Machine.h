@@ -20,6 +20,11 @@ public:
 		return id;
 	}
 
+	bool inUse() const
+	{
+		return curTask;
+	}
+
 private:
 	Task* curTask;
 	int id;

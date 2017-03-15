@@ -6,9 +6,11 @@
  */
 
 #include "Machine.h"
+#include <cstddef>
 
 Machine::Machine(int _id)
-:id(_id)
+:id(_id),
+ curTask(NULL)
 {
 	// TODO Auto-generated constructor stub
 

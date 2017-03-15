@@ -7,10 +7,10 @@
 
 #include "Task.h"
 
-Task::Task(Machine& _machine, int _duration, Task* _prevTask)
+Task::Task(int _index, Machine& _machine, int _duration)
 :duration(_duration),
  machine(_machine),
- prevTask(_prevTask)
+ index(_index)
 {
 	// TODO Auto-generated constructor stub
 

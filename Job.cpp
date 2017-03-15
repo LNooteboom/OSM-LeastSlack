@@ -8,10 +8,11 @@
 #include <vector>
 #include "Job.h"
 
-Job::Job()
+Job::Job(int _id)
+:id(_id),
+ currentTask(0)
 {
 	// TODO Auto-generated constructor stub
-
 }
 
 Job::~Job()

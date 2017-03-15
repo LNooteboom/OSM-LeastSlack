@@ -12,7 +12,7 @@
 class Task
 {
 public:
-	Task(Machine& _machine, int _duration, Task* _prevTask);
+	Task(int _index, Machine& _machine, int _duration);
 	virtual ~Task();
 	int getES();
 	int getLS();
@@ -27,29 +27,9 @@ public:
 		this->duration = duration;
 	}
 
-	const Task* getNextTask() const
+	int getIndex() const
 	{
-		return nextTask;
-	}
-
-	void setNextTask(Task* nextTask)
-	{
-		this->nextTask = nextTask;
-	}
-
-	int getNummer() const
-	{
-		return nummer;
-	}
-
-	const Task* getPrevTask() const
-	{
-		return prevTask;
-	}
-
-	void setPrevTask(Task* prevTask)
-	{
-		this->prevTask = prevTask;
+		return index;
 	}
 
 	const int getMachineId() const
@@ -59,10 +39,9 @@ public:
 
 private:
 	int duration;
-	int nummer;
 	Machine& machine;
-	Task* nextTask;
-	Task* prevTask;
+	int index;
+
 };
 
 #endif /* TASK_H_ */

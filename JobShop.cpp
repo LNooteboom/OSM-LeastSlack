@@ -45,18 +45,16 @@ JobShop::~JobShop()
 
 void JobShop::parseJobs()
 {
-
-	Task* prevTask = NULL;
 	for (int i = 0; i < nrofJobs; i++) {
-		jobs.push_back(Job());
+		jobs.push_back(Job(i));
 		bool newLine;
+		int currentIndex = 0;
 		do
 		{
 			int machineNum = getNextValue(newLine);
 			int duration = getNextValue(newLine);
 			Machine& curMachine = machines[machineNum];
-			jobs.back().addTask(Task(curMachine, duration, prevTask));
-			prevTask = jobs.back().getLastTask();
+			jobs.back().addTask(Task(currentIndex++, curMachine, duration));
 			if (!newLine)
 			{
 				char c;
