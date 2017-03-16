@@ -22,8 +22,8 @@ JobShop::JobShop(std::ifstream& _istrm)
 	// TODO Auto-generated constructor stub
 	//get args
 	bool newLine;
-	nrofMachines = getNextValue(newLine);
 	nrofJobs = getNextValue(newLine);
+	nrofMachines = getNextValue(newLine);
 
 	std::cout << nrofJobs << ", " << nrofMachines << std::endl;
 
