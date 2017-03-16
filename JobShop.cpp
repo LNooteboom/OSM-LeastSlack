@@ -41,16 +41,21 @@ JobShop::JobShop(std::ifstream& _istrm)
 	}
 	parseJobs();
 	calcCritPath();
+
 	for (unsigned int i = 0; i < machines.size(); i++)
 	{
-		std::cout << "ls: " << i << ": ";
+		//std::cout << "ls: " << i << ": ";
 		machines[i].getNextJob(currentTime, jobs, *critPath);
 	}
 	while (completedJobs < nrofJobs)
 	{
 		doScheduling();
 	}
-	std::cout << "end";
+	std::cout << "end" << std::endl;
+	for (unsigned int i = 0; i < jobs.size(); i++)
+	{
+		std::cout << i << " " << jobs[i].getStartTime() << " " << jobs[i].getEndTime() << std::endl;
+	}
 }
 
 JobShop::~JobShop()
@@ -165,7 +170,11 @@ void JobShop::doScheduling()
 			}
 		}
 	}
-	//std::cout << "skipping: " << lowestDuration << std::endl;
+	if (lowestDuration > 5000)
+	{
+		std::cout << "sad";
+	}
+	std::cout << "skipping: " << lowestDuration << std::endl;
 	currentTime += lowestDuration;
 	for (unsigned int i = 0; i < machines.size(); i++)
 	{

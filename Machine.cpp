@@ -84,7 +84,7 @@ bool Machine::skipTime(int amount, int curTime, std::vector<Job>& jobs, const Jo
 			curJob->nextTask();
 			if (curJob->getCurrentTask() == NULL)
 			{
-				std::cout << curJob->getId() << "EndTime: " << curTime << std::endl;
+				//std::cout << curJob->getId() << "EndTime: " << curTime << std::endl;
 				curJob->setEndTime(curTime);
 				ret = true;
 			}
