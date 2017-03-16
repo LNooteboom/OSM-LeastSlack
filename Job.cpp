@@ -47,7 +47,7 @@ int Job::getNextES(const Job& critPath) const
 {
 	if (this == &critPath)
 	{
-		return -1;
+		return 0;
 	}
 	const std::vector<Task>& critTasks = critPath.getTasks();
 	const int critProgress = critPath.currentTask;
@@ -68,7 +68,7 @@ int Job::getNextLS(const Job& critPath) const
 {
 	if (this == &critPath)
 	{
-		return -1;
+		return 0;
 	}
 	int critPathDuration = critPath.getTotalDuration();
 	int thisDuration = getTotalDuration();

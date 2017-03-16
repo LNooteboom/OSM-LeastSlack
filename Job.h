@@ -11,6 +11,7 @@
 #include <vector>
 #include <climits>
 #include <cstddef>
+#include <iostream>
 
 class Job
 {
@@ -82,7 +83,7 @@ public:
 	}
 	int getCurrentTaskDuration() const
 	{
-		if (currentTask == tasks.size())
+		if (currentTask >= tasks.size())
 		{
 			return INT_MAX;
 		}

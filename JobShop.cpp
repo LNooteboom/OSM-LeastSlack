@@ -25,7 +25,7 @@ JobShop::JobShop(std::ifstream& _istrm)
 	nrofJobs = getNextValue(newLine);
 	nrofMachines = getNextValue(newLine);
 
-	std::cout << nrofJobs << ", " << nrofMachines << std::endl;
+	//std::cout << nrofJobs << ", " << nrofMachines << std::endl;
 
 	for (int i = 0; i < nrofMachines; i++)
 	{
@@ -49,9 +49,10 @@ JobShop::JobShop(std::ifstream& _istrm)
 	}
 	while (completedJobs < nrofJobs)
 	{
+		calcCritPath();
 		doScheduling();
 	}
-	std::cout << "end" << std::endl;
+	//std::cout << "end" << std::endl;
 	for (unsigned int i = 0; i < jobs.size(); i++)
 	{
 		std::cout << i << " " << jobs[i].getStartTime() << " " << jobs[i].getEndTime() << std::endl;
@@ -152,7 +153,7 @@ void JobShop::calcCritPath()
 			longestDurIndex = i;
 		}
 	}
-	std::cout << "crit: " << longestDurIndex << std::endl;
+	//std::cout << "crit: " << longestDurIndex << "=" << longestDuration << std::endl;
 	critPath = &(jobs[longestDurIndex]);
 }
 
@@ -166,23 +167,24 @@ void JobShop::doScheduling()
 			int dur = machines[i].getCurJob()->getCurrentTaskDuration();
 			if (dur < lowestDuration)
 			{
+
 				lowestDuration = dur;
 			}
 		}
 	}
-	if (lowestDuration > 5000)
-	{
-		std::cout << "sad";
-	}
-	std::cout << "skipping: " << lowestDuration << std::endl;
+	//std::cout << "skipping: " << lowestDuration << std::endl;
 	currentTime += lowestDuration;
 	for (unsigned int i = 0; i < machines.size(); i++)
 	{
-		if (machines[i].skipTime(lowestDuration, currentTime, jobs, *critPath))
+		if (machines[i].skipTime(lowestDuration, currentTime))
 		{
 			completedJobs++;
 			//std::cout << completedJobs << std::endl;
 		}
+	}
+	for (unsigned int i = 0; i < machines.size(); i++)
+	{
+		machines[i].getNextJob(currentTime, jobs, *critPath);
 	}
 }
 

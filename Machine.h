@@ -18,7 +18,7 @@ public:
 	virtual ~Machine();
 	int getTimeRemaining() const;
 	void getNextJob(int curTime, std::vector<Job>& jobs, const Job& critPath);
-	bool skipTime(int amount, int curTime, std::vector<Job>& jobs, const Job& critPath);
+	bool skipTime(int amount, int curTime);
 
 	int getId() const
 	{
