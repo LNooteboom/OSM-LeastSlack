@@ -30,6 +30,8 @@ private:
 
 	int getNextValue(bool& newLine);
 	void parseJobs();
+	void calcCritPath();
+	void calcLeastSlack();
 };
 
 #endif /* JOBSHOP_H_ */

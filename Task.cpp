@@ -6,6 +6,7 @@
  */
 
 #include "Task.h"
+#include "Machine.h"
 
 Task::Task(int _index, Machine& _machine, int _duration)
 :duration(_duration),
@@ -21,10 +22,7 @@ Task::~Task()
 	// TODO Auto-generated destructor stub
 }
 
-int Task::getES() {
-
-}
-
-int Task::getLS() {
-
+const int Task::getMachineId() const
+{
+	return machine.getId();
 }

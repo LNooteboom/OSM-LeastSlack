@@ -7,15 +7,14 @@
 
 #ifndef TASK_H_
 #define TASK_H_
-#include "Machine.h"
 
+class Machine;
 class Task
 {
 public:
 	Task(int _index, Machine& _machine, int _duration);
 	virtual ~Task();
-	int getES();
-	int getLS();
+
 
 	int getDuration() const
 	{
@@ -32,10 +31,7 @@ public:
 		return index;
 	}
 
-	const int getMachineId() const
-	{
-		return machine.getId();
-	}
+	const int getMachineId() const;
 
 private:
 	int duration;

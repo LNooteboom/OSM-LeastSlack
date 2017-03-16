@@ -6,11 +6,13 @@
  */
 
 #include <vector>
+#include <iostream>
 #include "Job.h"
 
 Job::Job(int _id)
 :id(_id),
- currentTask(0)
+ currentTask(0),
+ inProgress(false)
 {
 	// TODO Auto-generated constructor stub
 }
@@ -28,4 +30,46 @@ void Job::addTask(Task task)
 Task* Job::getLastTask()
 {
 	return &( tasks.back() );
+}
+
+int Job::getTotalDuration() const
+{
+	int dur = 0;
+	for (unsigned int i = currentTask; i < tasks.size(); i++)
+	{
+		dur += tasks[i].getDuration();
+	}
+	return dur;
+}
+
+int Job::getNextES(const Job& critPath)
+{
+	if (this == &critPath)
+	{
+		return 0;
+	}
+	const std::vector<Task>& critTasks = critPath.getTasks();
+	const int critProgress = critPath.currentTask;
+
+	int es = 0;
+	for (unsigned int i = critProgress; i < critTasks.size(); i++)
+	{
+		if (tasks[currentTask].getMachineId() != critTasks[i].getMachineId())
+		{
+			break;
+		}
+		es += critTasks[i].getDuration();
+	}
+	return es;
+}
+
+int Job::getNextLS(const Job& critPath)
+{
+	if (this == &critPath)
+	{
+		return 0;
+	}
+	int critPathDuration = critPath.getTotalDuration();
+	int thisDuration = getTotalDuration();
+	return critPathDuration - thisDuration;
 }

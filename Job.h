@@ -18,10 +18,13 @@ public:
 
 	void addTask(Task task);
 	Task* getLastTask();
+	int getNextES(const Job& critPath);
+	int getNextLS(const Job& critPath);
+	int getTotalDuration() const;
 
-	int getCurrentTask() const
+	const Task& getCurrentTask() const
 	{
-		return currentTask;
+		return tasks[currentTask];
 	}
 
 	int getId() const
@@ -39,10 +42,26 @@ public:
 		return tasks;
 	}
 
+	void nextTask()
+	{
+		currentTask++;
+	}
+
+	bool isInProgress() const
+	{
+		return inProgress;
+	}
+
+	void setInProgress(bool inProgress)
+	{
+		this->inProgress = inProgress;
+	}
+
 private:
 	std::vector<Task> tasks;
-	int currentTask;
 	int id;
+	unsigned int currentTask;
+	bool inProgress;
 };
 
 #endif /* JOB_H_ */

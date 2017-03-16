@@ -7,13 +7,17 @@
 
 #ifndef MACHINE_H_
 #define MACHINE_H_
+#include <vector>
 
+class Job;
 class Task;
 class Machine
 {
 public:
 	Machine(int _id);
 	virtual ~Machine();
+
+	void getNextJob(const std::vector<Job>* job);
 
 	int getId() const
 	{

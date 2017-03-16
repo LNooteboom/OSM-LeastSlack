@@ -6,14 +6,15 @@
  */
 
 #include <vector>
+#include <iostream>
 #include "JobShop.h"
+#include "Machine.h"
 #include <string>
 
 #define BUFFER_LEN	8
 
 JobShop::JobShop(std::ifstream& _istrm)
-:istrm(_istrm),
- critPath(NULL)
+:istrm(_istrm)
 {
 	// TODO Auto-generated constructor stub
 	//get args
@@ -36,6 +37,8 @@ JobShop::JobShop(std::ifstream& _istrm)
 		} while (c != '\n');
 	}
 	parseJobs();
+	calcCritPath();
+	calcLeastSlack();
 }
 
 JobShop::~JobShop()
@@ -118,6 +121,31 @@ int JobShop::getNextValue(bool& newLine)
 		}
 	}
 	return std::stoi(arr);
+}
+
+void JobShop::calcCritPath()
+{
+	int longestDuration = -1;
+	int longestDurIndex = -1;
+	for (unsigned int i = 0; i < jobs.size(); i++)
+	{
+		if (jobs[i].getTotalDuration() > longestDuration)
+		{
+			longestDuration = jobs[i].getTotalDuration();
+			longestDurIndex = i;
+		}
+	}
+	std::cout << "crit: " << longestDurIndex << std::endl;
+	critPath = &(jobs[longestDurIndex]);
+}
+
+void JobShop::calcLeastSlack()
+{
+	for (unsigned int i = 0; i < jobs.size(); i++)
+	{
+		std::cout << "es: " << jobs[i].getNextES(*critPath);
+		std::cout << ", ls: " << jobs[i].getNextLS(*critPath) << std::endl;
+	}
 }
 
 void JobShop::print()
