@@ -9,6 +9,8 @@
 #define JOB_H_
 #include "Task.h"
 #include <vector>
+#include <climits>
+#include <cstddef>
 
 class Job
 {
@@ -18,13 +20,25 @@ public:
 
 	void addTask(Task task);
 	Task* getLastTask();
-	int getNextES(const Job& critPath);
-	int getNextLS(const Job& critPath);
+	int getNextES(const Job& critPath) const;
+	int getNextLS(const Job& critPath) const;
 	int getTotalDuration() const;
 
-	const Task& getCurrentTask() const
+	Task* getCurrentTask()
 	{
-		return tasks[currentTask];
+		if (currentTask < tasks.size())
+		{
+			return &(tasks[currentTask]);
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+
+	int getCurrentTaskIndex() const
+	{
+		return currentTask;
 	}
 
 	int getId() const
@@ -47,21 +61,43 @@ public:
 		currentTask++;
 	}
 
-	bool isInProgress() const
+	int getEndTime() const
 	{
-		return inProgress;
+		return endTime;
 	}
 
-	void setInProgress(bool inProgress)
+	void setEndTime(int endTime)
 	{
-		this->inProgress = inProgress;
+		this->endTime = endTime;
+	}
+
+	int getStartTime() const
+	{
+		return startTime;
+	}
+
+	void setStartTime(int startTime)
+	{
+		this->startTime = startTime;
+	}
+	int getCurrentTaskDuration() const
+	{
+		if (currentTask == tasks.size())
+		{
+			return INT_MAX;
+		}
+		else
+		{
+			return tasks[currentTask].getDuration();
+		}
 	}
 
 private:
 	std::vector<Task> tasks;
 	int id;
 	unsigned int currentTask;
-	bool inProgress;
+	int startTime;
+	int endTime;
 };
 
 #endif /* JOB_H_ */

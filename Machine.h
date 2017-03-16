@@ -16,8 +16,9 @@ class Machine
 public:
 	Machine(int _id);
 	virtual ~Machine();
-
-	void getNextJob(const std::vector<Job>* job);
+	int getTimeRemaining() const;
+	void getNextJob(int curTime, std::vector<Job>& jobs, const Job& critPath);
+	bool skipTime(int amount, int curTime, std::vector<Job>& jobs, const Job& critPath);
 
 	int getId() const
 	{
@@ -26,12 +27,17 @@ public:
 
 	bool inUse() const
 	{
-		return curTask;
+		return curJob;
+	}
+
+	Job* getCurJob() const
+	{
+		return curJob;
 	}
 
 private:
-	Task* curTask;
 	int id;
+	Job* curJob;
 };
 
 #endif /* MACHINE_H_ */

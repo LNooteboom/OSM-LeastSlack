@@ -10,11 +10,14 @@
 #include "JobShop.h"
 #include "Machine.h"
 #include <string>
+#include <climits>
 
 #define BUFFER_LEN	8
 
 JobShop::JobShop(std::ifstream& _istrm)
-:istrm(_istrm)
+:istrm(_istrm),
+ currentTime(0),
+ completedJobs(0)
 {
 	// TODO Auto-generated constructor stub
 	//get args
@@ -38,7 +41,16 @@ JobShop::JobShop(std::ifstream& _istrm)
 	}
 	parseJobs();
 	calcCritPath();
-	calcLeastSlack();
+	for (unsigned int i = 0; i < machines.size(); i++)
+	{
+		std::cout << "ls: " << i << ": ";
+		machines[i].getNextJob(currentTime, jobs, *critPath);
+	}
+	while (completedJobs < nrofJobs)
+	{
+		doScheduling();
+	}
+	std::cout << "end";
 }
 
 JobShop::~JobShop()
@@ -139,12 +151,29 @@ void JobShop::calcCritPath()
 	critPath = &(jobs[longestDurIndex]);
 }
 
-void JobShop::calcLeastSlack()
+void JobShop::doScheduling()
 {
-	for (unsigned int i = 0; i < jobs.size(); i++)
+	int lowestDuration = INT_MAX;
+	for (unsigned int i = 0; i < machines.size(); i++)
 	{
-		std::cout << "es: " << jobs[i].getNextES(*critPath);
-		std::cout << ", ls: " << jobs[i].getNextLS(*critPath) << std::endl;
+		if (machines[i].getCurJob())
+		{
+			int dur = machines[i].getCurJob()->getCurrentTaskDuration();
+			if (dur < lowestDuration)
+			{
+				lowestDuration = dur;
+			}
+		}
+	}
+	//std::cout << "skipping: " << lowestDuration << std::endl;
+	currentTime += lowestDuration;
+	for (unsigned int i = 0; i < machines.size(); i++)
+	{
+		if (machines[i].skipTime(lowestDuration, currentTime, jobs, *critPath))
+		{
+			completedJobs++;
+			//std::cout << completedJobs << std::endl;
+		}
 	}
 }
 

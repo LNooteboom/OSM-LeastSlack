@@ -10,7 +10,7 @@
 
 Task::Task(int _index, Machine& _machine, int _duration)
 :duration(_duration),
- machine(_machine),
+ machineId(_machine.getId()),
  index(_index)
 {
 	// TODO Auto-generated constructor stub
@@ -22,7 +22,7 @@ Task::~Task()
 	// TODO Auto-generated destructor stub
 }
 
-const int Task::getMachineId() const
+int Task::getMachineId() const
 {
-	return machine.getId();
+	return machineId;
 }

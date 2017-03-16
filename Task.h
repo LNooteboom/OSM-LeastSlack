@@ -31,11 +31,11 @@ public:
 		return index;
 	}
 
-	const int getMachineId() const;
+	int getMachineId() const;
 
 private:
 	int duration;
-	Machine& machine;
+	int machineId;
 	int index;
 
 };

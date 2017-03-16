@@ -27,11 +27,13 @@ private:
 
 	int nrofJobs;
 	int nrofMachines;
+	int currentTime;
+	int completedJobs;
 
 	int getNextValue(bool& newLine);
 	void parseJobs();
 	void calcCritPath();
-	void calcLeastSlack();
+	void doScheduling();
 };
 
 #endif /* JOBSHOP_H_ */

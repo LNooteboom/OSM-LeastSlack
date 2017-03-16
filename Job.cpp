@@ -12,7 +12,8 @@
 Job::Job(int _id)
 :id(_id),
  currentTask(0),
- inProgress(false)
+ startTime(-1),
+ endTime(-1)
 {
 	// TODO Auto-generated constructor stub
 }
@@ -42,11 +43,11 @@ int Job::getTotalDuration() const
 	return dur;
 }
 
-int Job::getNextES(const Job& critPath)
+int Job::getNextES(const Job& critPath) const
 {
 	if (this == &critPath)
 	{
-		return 0;
+		return -1;
 	}
 	const std::vector<Task>& critTasks = critPath.getTasks();
 	const int critProgress = critPath.currentTask;
@@ -63,11 +64,11 @@ int Job::getNextES(const Job& critPath)
 	return es;
 }
 
-int Job::getNextLS(const Job& critPath)
+int Job::getNextLS(const Job& critPath) const
 {
 	if (this == &critPath)
 	{
-		return 0;
+		return -1;
 	}
 	int critPathDuration = critPath.getTotalDuration();
 	int thisDuration = getTotalDuration();
