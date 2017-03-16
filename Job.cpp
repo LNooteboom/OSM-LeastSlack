@@ -28,11 +28,6 @@ void Job::addTask(Task task)
 	tasks.push_back(task);
 }
 
-Task* Job::getLastTask()
-{
-	return &( tasks.back() );
-}
-
 int Job::getTotalDuration() const
 {
 	int dur = 0;
