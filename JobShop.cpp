@@ -172,7 +172,7 @@ void JobShop::doScheduling()
 			}
 		}
 	}
-	std::cout << "skipping: " << lowestDuration << std::endl;
+	//std::cout << "skipping: " << lowestDuration << std::endl;
 	currentTime += lowestDuration;
 	for (unsigned int i = 0; i < machines.size(); i++)
 	{
