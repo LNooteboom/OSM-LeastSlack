@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 	}
 	//std::cout << "start" << std::endl;
 	JobShop* js = new JobShop(istrm);
-	//js->print();
+	js->print();
 
 	istrm.close();
 

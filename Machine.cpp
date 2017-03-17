@@ -27,11 +27,11 @@ Machine::~Machine()
 
 int Machine::getTimeRemaining() const
 {
-	if (!curJob)
+	if (curJob == NULL || curJob->getCurrentTask() == NULL)
 	{
 		return 0;
 	}
-	return curJob->getCurrentTask()->getDuration();
+	return curJob->getCurrentTaskDuration();
 }
 
 void Machine::getNextJob(int curTime, std::vector<Job>& jobs, const Job& critPath)
@@ -70,13 +70,27 @@ void Machine::getNextJob(int curTime, std::vector<Job>& jobs, const Job& critPat
 
 bool Machine::skipTime(int amount, int curTime)
 {
-	int newDur = 0;
-	if (curJob)
-	{
-		newDur = curJob->getCurrentTaskDuration() - amount;
-		curJob->getCurrentTask()->setDuration(newDur);
-	}
+	//int newDur = 0;
 	bool ret = false;
+	if (curJob && curJob->getCurrentTask())
+	{
+
+		int newDur = curJob->getCurrentTaskDuration() - amount;
+		curJob->getCurrentTask()->setDuration(newDur);
+
+		if (newDur == 0)
+		{
+			curJob->nextTask();
+			if (curJob->getCurrentTask() == NULL)
+			{
+				curJob->setEndTime(curTime);
+				ret = true;
+			}
+			curJob = NULL;
+		}
+	}
+
+	/*
 	if (newDur == 0)
 	{
 		if (curJob)
@@ -90,6 +104,6 @@ bool Machine::skipTime(int amount, int curTime)
 			}
 		}
 		//getNextJob(curTime, jobs, critPath);
-	}
+	}*/
 	return ret;
 }
