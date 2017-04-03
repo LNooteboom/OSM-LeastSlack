@@ -39,15 +39,17 @@ void Machine::getNextJob(int curTime, std::vector<Job>& jobs, const Job& critPat
 	Job* bestCandidate = NULL;
 	int leastSlack = INT_MAX;
 	for (unsigned int i = 0; i < jobs.size(); i++)
+	//for (int i = (int)jobs.size() - 1; i >= 0; i--)
 	{
 		const Task* curTask = jobs[i].getCurrentTask();
 		if (curTask && curTask->getMachineId() == id)
 		{
-			int curSlack = jobs[i].getNextLS(critPath) - jobs[i].getNextES(critPath);
-			if (curSlack < 1)
+			if (&(jobs[i]) == &critPath)
 			{
-				curSlack = 1;
+				bestCandidate = &(jobs[i]);
+				break;
 			}
+			int curSlack = jobs[i].getNextLS(critPath) - jobs[i].getNextES(critPath);
 			if (curSlack < leastSlack)
 			{
 				leastSlack = curSlack;
@@ -57,13 +59,11 @@ void Machine::getNextJob(int curTime, std::vector<Job>& jobs, const Job& critPat
 	}
 	if (bestCandidate)
 	{
+		//std::cout << "job: " << bestCandidate->getId() << std::endl;
 		if (bestCandidate->getStartTime() == -1)
 		{
 			bestCandidate->setStartTime(curTime);
 		}
-		//std::cout <<  "cand: " <<bestCandidate->getId() << std::endl;
-	} else {
-		//std::cout << "none" <<std::endl;
 	}
 	curJob = bestCandidate;
 }
@@ -77,11 +77,10 @@ bool Machine::skipTime(int amount, int curTime)
 
 		int newDur = curJob->getCurrentTaskDuration() - amount;
 		curJob->getCurrentTask()->setDuration(newDur);
-
-		if (newDur == 0)
+		if (newDur <= 0)
 		{
 			curJob->nextTask();
-			if (curJob->getCurrentTask() == NULL)
+			if (!curJob->getCurrentTask())
 			{
 				curJob->setEndTime(curTime);
 				ret = true;
@@ -89,21 +88,5 @@ bool Machine::skipTime(int amount, int curTime)
 			curJob = NULL;
 		}
 	}
-
-	/*
-	if (newDur == 0)
-	{
-		if (curJob)
-		{
-			curJob->nextTask();
-			if (curJob->getCurrentTask() == NULL)
-			{
-				//std::cout << curJob->getId() << "EndTime: " << curTime << std::endl;
-				curJob->setEndTime(curTime);
-				ret = true;
-			}
-		}
-		//getNextJob(curTime, jobs, critPath);
-	}*/
 	return ret;
 }

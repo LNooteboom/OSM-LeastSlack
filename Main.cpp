@@ -24,8 +24,8 @@ int main(int argc, char **argv) {
 		std::cout << "Failed to open file: " << filename << std::endl;
 		return 1;
 	}
-	//std::cout << "start" << std::endl;
 	JobShop* js = new JobShop(istrm);
+	js->start();
 	//js->print();
 
 	istrm.close();

@@ -128,6 +128,18 @@ public:
 		}
 	}
 
+	int getCurrentMachineId() const
+	{
+		if (currentTask >= tasks.size())
+		{
+			return -1;
+		}
+		else
+		{
+			return tasks[currentTask].getMachineId();
+		}
+	}
+
 private:
 	///Vector of tasks
 	std::vector<Task> tasks;

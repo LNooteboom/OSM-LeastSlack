@@ -23,6 +23,9 @@ public:
 	JobShop(std::ifstream& _istrm);
 	virtual ~JobShop();
 
+	//Starts scheduling
+	void start();
+
 	///Prints all jobs and tasks
 	void print();
 
@@ -47,13 +50,6 @@ private:
 	int currentTime;
 	///Number of completed jobs
 	int completedJobs;
-
-	///Returns the next integer value from istrm
-	/**
-	 * Returns the next integer value from istrm, sets newLine
-	 * to true if a newline was found at the end of the number to be parsed.
-	 */
-	int getNextValue(bool& newLine);
 
 	///Parses the file input and creates all jobs and tasks
 	/**
