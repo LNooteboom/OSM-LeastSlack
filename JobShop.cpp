@@ -2,7 +2,7 @@
  * JobShop.cpp
  *
  *  Created on: Mar 13, 2017
- *      Author: lieven
+ *      Author: Lieven Plasmans, Luke Nooteboom
  */
 
 #include <vector>
@@ -20,20 +20,19 @@ JobShop::JobShop(std::ifstream& _istrm)
  currentTime(0),
  completedJobs(0)
 {
-	// TODO Auto-generated constructor stub
-	//get args
+	//get number of jobs and machines from first line
 	std::string firstLine;
 	std::getline(istrm, firstLine);
 	std::size_t pos;
 	nrofJobs = std::stoi(firstLine, &pos);
 	nrofMachines = std::stoi(firstLine.substr(pos));
 
-	//std::cout << nrofJobs << ", " << nrofMachines << std::endl;
-
+	//Initialize the machines
 	for (int i = 0; i < nrofMachines; i++)
 	{
 		machines.push_back(Machine(i));
 	}
+	//Parse the file into jobs and tasks
 	parseJobs();
 
 }
@@ -45,19 +44,23 @@ JobShop::~JobShop()
 
 void JobShop::start()
 {
+	//Calculate the critical path of the starting situation
+	//And assign the first jobs
 	calcCritPath();
-
 	for (unsigned int i = 0; i < machines.size(); i++)
 	{
 		//std::cout << "ls: " << i << ": ";
 		machines[i].getNextJob(currentTime, jobs, *critPath);
 	}
+
+	//Do the actual scheduling while there are still uncompleted jobs
 	while (completedJobs < nrofJobs)
 	{
 		//calcCritPath();
 		doScheduling();
 	}
-	//std::cout << "end" << std::endl;
+
+	//Print the start and end time of each job
 	for (unsigned int i = 0; i < jobs.size(); i++)
 	{
 		std::cout << i << " " << jobs[i].getStartTime() << " " << jobs[i].getEndTime() << std::endl;
@@ -75,21 +78,28 @@ void JobShop::parseJobs()
 		std::size_t pos = 0;
 		int currentIndex = 0;
 		while (true) {
+			//Find first non-whitespace character
 			pos = line.find_first_not_of(wspaceChars, pos);
 			if (pos == std::string::npos || pos >= line.size() - 1) {
+				//Break if the end of the line is reached
 				break;
 			}
 
 			std::size_t newPos;
+			//Get the machine number
 			int machineNum;
 			machineNum = std::stoi(line.substr(pos), &newPos);
+			//Adjust the current position
 			pos += newPos;
 
+			//Get the duration
 			pos = line.find_first_not_of(wspaceChars, pos);
 			int duration = std::stoi(line.substr(pos), &newPos);
 			pos += newPos;
 
+			//Get a reference to the current machine
 			Machine& curMachine = machines[machineNum];
+			//Add this task to the current job
 			jobs.back().addTask(Task(currentIndex++, curMachine, duration));
 		}
 	}
@@ -101,6 +111,7 @@ void JobShop::calcCritPath()
 	int longestDurIndex = -1;
 	for (unsigned int i = 0; i < jobs.size(); i++)
 	{
+		//Get the job which takes the longest
 		if (jobs[i].getTotalDuration() > longestDuration)
 		{
 			longestDuration = jobs[i].getTotalDuration();
@@ -113,6 +124,8 @@ void JobShop::calcCritPath()
 
 void JobShop::doScheduling()
 {
+	//Look in all the machines and get the task which has the lowest duration
+	//remaining
 	int lowestDuration = INT_MAX;
 	for (unsigned int i = 0; i < machines.size(); i++)
 	{
@@ -132,6 +145,8 @@ void JobShop::doScheduling()
 		std::cout << nrofMachines << std::endl;
 		abort();
 	}
+
+	//Skip time by the lowest duration
 	currentTime += lowestDuration;
 	for (unsigned int i = 0; i < machines.size(); i++)
 	{
@@ -141,10 +156,13 @@ void JobShop::doScheduling()
 			//std::cout << completedJobs << std::endl;
 		}
 	}
+
+	//Recalculate the critical path
 	calcCritPath();
+	//Assign new jobs for each machine
 	for (unsigned int i = 0; i < machines.size(); i++)
 	{
-		if (machines[i].getTimeRemaining() == 0)
+		if (machines[i].getTimeRemaining() == 0) //If this machine has no task or task has ended
 		{
 			machines[i].getNextJob(currentTime, jobs, *critPath);
 		}

@@ -2,7 +2,7 @@
  * Machine.h
  *
  *  Created on: Mar 13, 2017
- *      Author: lieven
+ *      Author: Lieven Plasmans, Luke Nooteboom
  */
 
 #ifndef MACHINE_H_
@@ -36,16 +36,10 @@ public:
 	bool skipTime(int amount, int curTime);
 
 	///Returns this machine's id
-	int getId() const
-	{
-		return id;
-	}
+	int getId() const;
 
 	///Returns this machine's current job
-	Job* getCurJob() const
-	{
-		return curJob;
-	}
+	Job* getCurJob() const;
 
 private:
 	///This machine's id

@@ -2,7 +2,7 @@
  * Task.h
  *
  *  Created on: Mar 13, 2017
- *      Author: lieven
+ *      Author: Lieven Plasmans, Luke Nooteboom
  */
 
 #ifndef TASK_H_
@@ -16,22 +16,13 @@ public:
 	virtual ~Task();
 
 	///Returns this task's remaining duration
-	int getDuration() const
-	{
-		return duration;
-	}
+	int getDuration() const;
 
 	///Sets this task's remaining duration
-	void setDuration(int duration)
-	{
-		this->duration = duration;
-	}
+	void setDuration(int duration);
 
 	///Returns this task's index
-	int getIndex() const
-	{
-		return index;
-	}
+	int getIndex() const;
 
 	///Returns the id of the machine this task must be executed on
 	int getMachineId() const;

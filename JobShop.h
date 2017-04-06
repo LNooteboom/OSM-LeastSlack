@@ -2,7 +2,7 @@
  * JobShop.h
  *
  *  Created on: Mar 13, 2017
- *      Author: lieven
+ *      Author: Lieven Plasmans, Luke Nooteboom
  */
 
 #ifndef JOBSHOP_H_

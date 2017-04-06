@@ -2,7 +2,7 @@
  * Job.cpp
  *
  *  Created on: Mar 13, 2017
- *      Author: lieven
+ *      Author: Lieven Plasmans, Luke Nooteboom
  */
 
 #include <vector>
@@ -69,3 +69,80 @@ int Job::getNextLS(const Job& critPath) const
 	int thisDuration = getTotalDuration();
 	return critPathDuration - thisDuration;
 }
+
+Task* Job::getCurrentTask()
+{
+	if (currentTask < tasks.size())
+	{
+		return &(tasks[currentTask]);
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+int Job::getId() const
+{
+	return id;
+}
+
+int Job::getNrOfTasks() const
+{
+	return tasks.size();
+}
+
+const std::vector<Task>& Job::getTasks() const
+{
+	return tasks;
+}
+
+void Job::nextTask()
+{
+	currentTask++;
+}
+
+int Job::getEndTime() const
+{
+	return endTime;
+}
+
+void Job::setEndTime(int endTime)
+{
+	this->endTime = endTime;
+}
+
+int Job::getStartTime() const
+{
+	return startTime;
+}
+
+void Job::setStartTime(int startTime)
+{
+	this->startTime = startTime;
+}
+
+int Job::getCurrentTaskDuration() const
+{
+	if (currentTask >= tasks.size())
+	{
+		return INT_MAX;
+	}
+	else
+	{
+		return tasks[currentTask].getDuration();
+	}
+}
+
+int Job::getCurrentMachineId() const
+{
+	if (currentTask >= tasks.size())
+	{
+		return -1;
+	}
+	else
+	{
+		return tasks[currentTask].getMachineId();
+	}
+}
+

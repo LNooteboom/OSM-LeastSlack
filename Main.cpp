@@ -2,7 +2,7 @@
  * Main.cpp
  *
  *  Created on: Mar 13, 2017
- *      Author: lieven
+ *      Author: Lieven Plasmans, Luke Nooteboom
  */
 
 #include <iostream>

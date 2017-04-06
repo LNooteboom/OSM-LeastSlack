@@ -2,7 +2,7 @@
  * Job.h
  *
  *  Created on: Mar 13, 2017
- *      Author: lieven
+ *      Author: Lieven Plasmans, Luke Nooteboom
  */
 
 #ifndef JOB_H_
@@ -51,94 +51,40 @@ public:
 	 * Returns a pointer to the current task, or NULL if all tasks are
 	 * completed.
 	 */
-	Task* getCurrentTask()
-	{
-		if (currentTask < tasks.size())
-		{
-			return &(tasks[currentTask]);
-		}
-		else
-		{
-			return NULL;
-		}
-	}
+	Task* getCurrentTask();
 
 	///Returns this job's id
-	int getId() const
-	{
-		return id;
-	}
+	int getId() const;
 
 	///Returns this jobs's tota number of tasks
-	int getNrOfTasks() const
-	{
-		return tasks.size();
-	}
+	int getNrOfTasks() const;
 
 	///Returns a reference to this job's vector of tasks
-	const std::vector<Task>& getTasks() const
-	{
-		return tasks;
-	}
+	const std::vector<Task>& getTasks() const;
 
 	///Increments the task index
-	void nextTask()
-	{
-		currentTask++;
-	}
+	void nextTask();
 
 	///Gets this job's end time
-	int getEndTime() const
-	{
-		return endTime;
-	}
+	int getEndTime() const;
 
 	///Sets this job's end time
-	void setEndTime(int endTime)
-	{
-		this->endTime = endTime;
-	}
+	void setEndTime(int endTime);
 
 	///Gets this job's start time
-	int getStartTime() const
-	{
-		return startTime;
-	}
+	int getStartTime() const;
 
 	///Sets this job's start time
-	void setStartTime(int startTime)
-	{
-		this->startTime = startTime;
-	}
+	void setStartTime(int startTime);
 
 	///Returns the duration of this job's current task
 	/**
 	 * Returns the duration of this job's current task, or
 	 * NULL if there are no more remaining tasks.
 	 */
-	int getCurrentTaskDuration() const
-	{
-		if (currentTask >= tasks.size())
-		{
-			return INT_MAX;
-		}
-		else
-		{
-			return tasks[currentTask].getDuration();
-		}
-	}
+	int getCurrentTaskDuration() const;
 
-	int getCurrentMachineId() const
-	{
-		if (currentTask >= tasks.size())
-		{
-			return -1;
-		}
-		else
-		{
-			return tasks[currentTask].getMachineId();
-		}
-	}
+	int getCurrentMachineId() const;
 
 private:
 	///Vector of tasks
